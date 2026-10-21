@@ -60,7 +60,7 @@ export function Hero() {
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3 lg:mt-[24px]">
-            <ButtonLink href="#popular" size="lg" className="px-[18px] text-[14px] whitespace-nowrap">
+            <ButtonLink href="/catalog" size="lg" className="px-[18px] text-[14px] whitespace-nowrap">
               Перейти в каталог
               <ArrowRight className="size-4" strokeWidth={2} />
             </ButtonLink>
@@ -79,7 +79,7 @@ export function Hero() {
           {heroCategories.map((cat) => (
             <Link
               key={cat.title}
-              href={cat.href}
+              href={`/catalog?category=${cat.slug}`}
               className={`group relative isolate h-[145px] overflow-hidden rounded-[20px] ${cardTheme[cat.theme]}`}
             >
               <Image

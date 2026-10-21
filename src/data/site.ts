@@ -1,4 +1,8 @@
 // Все тексты и моковые данные сайта собраны здесь — меняйте в одном месте.
+// Меню (товары каталога) — в ./menu.ts
+import { findProduct, menu, type Product } from "./menu";
+
+export type { Product } from "./menu";
 
 export const site = {
   name: "Maki Maki",
@@ -14,45 +18,35 @@ export const site = {
   year: 2026,
 };
 
-export type Product = {
-  id: string;
-  title: string;
-  category: "rolls" | "sushi" | "sets" | "sashimi" | "drinks";
-  portion: string;
-  description: string;
-  price: number;
-  image: string;
-  badge?: string;
-};
 
 export const heroCategories = [
   {
     title: "Роллы",
+    slug: "rolls",
     text: "Большой выбор\nна любой вкус",
     image: "/images/cat-rolls.webp",
     theme: "dark" as const,
-    href: "#popular",
   },
   {
     title: "Сеты",
+    slug: "sets",
     text: "Вкусно и\nвыгодно",
     image: "/images/cat-sets.webp",
     theme: "light" as const,
-    href: "#popular",
   },
   {
     title: "Суши",
+    slug: "sushi",
     text: "Классика\nЯпонии",
     image: "/images/cat-sushi.webp",
     theme: "dark" as const,
-    href: "#popular",
   },
   {
     title: "Напитки\nи соусы",
+    slug: "drinks",
     text: "",
     image: "/images/cat-drinks.webp",
     theme: "accent" as const,
-    href: "#popular",
   },
 ];
 
@@ -63,61 +57,23 @@ export const advantages = [
 ] as const;
 
 export const categoryTiles = [
-  { title: "Роллы", image: "/images/tile-rolls.webp" },
-  { title: "Суши", image: "/images/tile-sushi.webp" },
-  { title: "Сеты", image: "/images/tile-sets.webp" },
-  { title: "Сашими", image: "/images/tile-sashimi.webp" },
+  { title: "Роллы", slug: "rolls", image: "/images/tile-rolls.webp" },
+  { title: "Суши", slug: "sushi", image: "/images/tile-sushi.webp" },
+  { title: "Сеты", slug: "sets", image: "/images/tile-sets.webp" },
+  { title: "Сашими", slug: "sashimi", image: "/images/tile-sashimi.webp" },
 ];
 
-export const popularProducts: Product[] = [
-  {
-    id: "philadelphia",
-    title: "Филадельфия классик",
-    category: "rolls",
-    portion: "8 шт · 260 г",
-    description: "Лосось, сливочный сыр, огурец, рис, нори",
-    price: 590,
-    image: "/images/p-philadelphia.webp",
-    badge: "Хит",
-  },
-  {
-    id: "nigiri-salmon",
-    title: "Нигири с лососем",
-    category: "sushi",
-    portion: "2 шт · 70 г",
-    description: "Охлаждённый лосось на рисе с тонким слоем васаби",
-    price: 240,
-    image: "/images/p-nigiri.webp",
-  },
-  {
-    id: "set-tokyo",
-    title: "Сет «Токио»",
-    category: "sets",
-    portion: "32 шт · 960 г",
-    description: "Филадельфия, Калифорния, маки с огурцом и лососем",
-    price: 1890,
-    image: "/images/p-set-tokyo.webp",
-    badge: "−15%",
-  },
-  {
-    id: "california",
-    title: "Калифорния с крабом",
-    category: "rolls",
-    portion: "8 шт · 240 г",
-    description: "Снежный краб, авокадо, огурец, икра тобико",
-    price: 520,
-    image: "/images/p-california.webp",
-  },
-];
+export const popularProducts: Product[] = ["philadelphia", "nigiri-salmon", "set-tokyo", "california"]
+  .map((id) => findProduct(id))
+  .filter((p): p is Product => Boolean(p));
 
+const dragon = menu.find((p) => p.id === "dragon")!;
 export const rollOfTheDay: Product = {
+  ...dragon,
   id: "roll-of-day",
   title: "Ролл дня · Дракон",
-  category: "rolls",
-  portion: "8 шт · 280 г",
-  description: "Угорь, сливочный сыр, огурец, соус унаги, кунжут",
   price: 450,
-  image: "/images/p-dragon.webp",
+  oldPrice: dragon.price,
 };
 
 export const reasons = [

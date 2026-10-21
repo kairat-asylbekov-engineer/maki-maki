@@ -4,7 +4,7 @@ import { OkIcon, TelegramIcon, VkIcon } from "@/components/ui/icons";
 
 export function Contacts() {
   return (
-    <section className="container-contact grid gap-4 pt-14 md:grid-cols-2 lg:gap-[22px] lg:pt-[73px]">
+    <section id="contacts" className="container-contact scroll-mt-6 grid gap-4 pt-14 md:grid-cols-2 lg:gap-[22px] lg:pt-[73px]">
       {/* Мы на связи */}
       <div className="relative isolate min-h-[175px] overflow-hidden rounded-[22px] bg-[#191919] px-[30px] py-[30px] text-white">
         <Image

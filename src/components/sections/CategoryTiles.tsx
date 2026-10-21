@@ -9,7 +9,7 @@ export function CategoryTiles() {
         {categoryTiles.map((tile) => (
           <Link
             key={tile.title}
-            href="#popular"
+            href={`/catalog?category=${tile.slug}`}
             className="group relative block h-[150px] overflow-hidden rounded-[14px] bg-ink lg:h-[173px]"
           >
             <Image

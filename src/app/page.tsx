@@ -8,9 +8,9 @@ import { About } from "@/components/sections/About";
 import { Steps } from "@/components/sections/Steps";
 import { PromoBanner } from "@/components/sections/PromoBanner";
 import { Reviews } from "@/components/sections/Reviews";
-import { Contacts } from "@/components/sections/Contacts";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { ButtonLink } from "@/components/ui/Button";
-import { formatPrice, site } from "@/data/site";
+import { formatPrice } from "@/data/site";
 
 export default function Home() {
   return (
@@ -37,17 +37,14 @@ export default function Home() {
           }
           text={`При первом заказе от ${formatPrice(1500)} - Филадельфия в подарок!`}
           action={
-            <ButtonLink href="#popular">
+            <ButtonLink href="/catalog">
               Заказать сейчас
             </ButtonLink>
           }
         />
         <Reviews />
-        <Contacts />
       </main>
-      <footer className="container-contact pt-10 pb-16 text-[13px] lg:pt-[37px] lg:pb-[48px] lg:pl-2">
-        Copyright © {site.year}
-      </footer>
+      <SiteFooter />
     </>
   );
 }

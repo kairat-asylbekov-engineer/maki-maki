@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ui/Button";
 
 export function About() {
   return (
-    <section className="container-main pt-14 lg:pt-[90px]">
+    <section id="about" className="container-main pt-14 lg:pt-[90px]">
       <div className="grid gap-8 md:grid-cols-2 md:gap-[22px]">
         <div>
           <h2 className="font-display text-[24px] leading-[1.17] md:text-[31px]">
@@ -15,7 +15,7 @@ export function About() {
               <p key={p.slice(0, 24)}>{p}</p>
             ))}
           </div>
-          <ButtonLink href="#popular" className="mt-7 lg:mt-[35px]">
+          <ButtonLink href="/catalog" className="mt-7 lg:mt-[35px]">
             Смотреть меню
           </ButtonLink>
         </div>
