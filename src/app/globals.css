@@ -1,0 +1,113 @@
+@import "tailwindcss";
+
+@theme {
+  --color-accent: #ff5b4a;
+  --color-accent-hover: #f24a39;
+  --color-ink: #1a1a1a;
+  --color-muted: #6b6b6b;
+  --color-page: #f7f3f2;
+  --color-cream: #fdf6f2;
+  --color-skeleton: #e7e7e7;
+  --color-vk: #0077ff;
+  --color-ok: #f7931e;
+
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-sans: "Onest", system-ui, sans-serif;
+
+  --shadow-accent: 0 8px 22px -6px rgb(255 91 74 / 0.55);
+  --shadow-soft: 0 6px 24px -8px rgb(120 70 40 / 0.18);
+  --shadow-num: 0 6px 16px -4px rgb(255 91 74 / 0.28);
+}
+
+/*
+  Контейнеры повторяют сетку макета (вьюпорт 1080px):
+  main  — 996px (отступ 42px)   — основные секции
+  hero  — 1042px (отступ 19px)  — карточки в первом экране
+  wide  — 1050px (отступ 15px)  — баннеры
+  contact — 1016px (отступ 32px) — блоки контактов
+  На больших экранах ширина растёт пропорционально до предела.
+*/
+@utility container-main {
+  width: min(100% - 32px, 1156px);
+  margin-inline: auto;
+  @media (width >= 1024px) {
+    width: min(100% - 84px, 1156px);
+  }
+}
+@utility container-hero {
+  width: min(100% - 32px, 1202px);
+  margin-inline: auto;
+  @media (width >= 1024px) {
+    width: min(100% - 38px, 1202px);
+  }
+}
+@utility container-wide {
+  width: min(100% - 24px, 1210px);
+  margin-inline: auto;
+  @media (width >= 1024px) {
+    width: min(100% - 30px, 1210px);
+  }
+}
+@utility container-contact {
+  width: min(100% - 32px, 1176px);
+  margin-inline: auto;
+  @media (width >= 1024px) {
+    width: min(100% - 64px, 1176px);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.heading-section {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  @media (width >= 768px) {
+    font-size: 31px;
+  }
+}
+
+@keyframes skeleton-pulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+.animate-skeleton {
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.animate-toast {
+  animation: toast-in 0.25s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-skeleton,
+  .animate-toast {
+    animation: none;
+  }
+}
