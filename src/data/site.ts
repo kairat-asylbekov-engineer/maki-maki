@@ -13,10 +13,30 @@ export const site = {
   phoneHref: "tel:+70000000000",
   telegramChannel: "Maki Maki",
   telegramHref: "https://t.me/",
+  whatsappHref: "https://wa.me/70000000000",
   vkHref: "https://vk.com/",
   okHref: "https://ok.ru/",
+  email: "hello@maki-maki.ru",
+  address: "г. Москва, ул. Примерная, д. 1",
+  hours: [
+    ["Пн—Чт", "с 11:00 до 23:00"],
+    ["Пт—Вс", "с 11:00 до 00:00"],
+  ] as [string, string][],
+  legal: "ИП Иванов И. И. · ИНН 000000000000 · ОГРНИП 000000000000000",
+  /** Координаты для карты [долгота, широта] */
+  mapCenter: [37.6176, 55.7558] as [number, number],
   year: 2026,
 };
+
+export const navLinks = [
+  { href: "/catalog", label: "Меню" },
+  { href: "/about", label: "О нас" },
+  { href: "/payment", label: "Оплата" },
+  { href: "/delivery", label: "Доставка" },
+  { href: "/reviews", label: "Отзывы" },
+  { href: "/promo", label: "Акции" },
+  { href: "/contacts", label: "Контакты" },
+];
 
 
 export const heroCategories = [
@@ -72,8 +92,8 @@ export const rollOfTheDay: Product = {
   ...dragon,
   id: "roll-of-day",
   title: "Ролл дня · Дракон",
-  price: 450,
-  oldPrice: dragon.price,
+  options: [{ ...dragon.options[0], price: 450, oldPrice: dragon.options[0].price }],
+  tags: ["promo"],
 };
 
 export const reasons = [

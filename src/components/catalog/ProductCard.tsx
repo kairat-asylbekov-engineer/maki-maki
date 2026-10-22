@@ -1,107 +1,88 @@
 "use client";
 
 import Image from "next/image";
-import { Flame, Minus, Plus } from "lucide-react";
-import { formatPrice, type Product } from "@/data/site";
-import { tagLabels } from "@/data/menu";
+import Link from "next/link";
+import { useState } from "react";
+import { formatPrice } from "@/data/site";
+import { discountOf, priceOf, tagColors, tagLabels, type Product } from "@/data/menu";
 import { useCart } from "@/components/cart/CartProvider";
+import { QtyStepper } from "@/components/ui/QtyStepper";
 
-function badgeOf(product: Product) {
-  if (product.badge) return product.badge;
-  if (product.oldPrice) return `−${Math.round((1 - product.price / product.oldPrice) * 100)}%`;
-  const tag = product.tags?.find((t) => t === "hit" || t === "new");
-  return tag ? tagLabels[tag] : null;
+export function ProductLabels({ product, option = 0, className = "" }: { product: Product; option?: number; className?: string }) {
+  const discount = discountOf(priceOf(product, option));
+  const tags = product.tags ?? [];
+  if (!tags.length && !discount) return null;
+  return (
+    <div className={`flex flex-wrap gap-[3px] ${className}`}>
+      {tags.map((t) => (
+        <span
+          key={t}
+          className={`rounded-full px-[7px] py-[3px] font-display text-[8.5px] leading-none text-white uppercase lg:text-[9px] ${tagColors[t]}`}
+        >
+          {tagLabels[t]}
+        </span>
+      ))}
+      {discount > 0 && (
+        <span className={`rounded-full px-[7px] py-[3px] font-display text-[8.5px] leading-none text-white lg:text-[9px] ${tagColors.discount}`}>
+          −{discount}%
+        </span>
+      )}
+    </div>
+  );
 }
 
 export function ProductSkeleton() {
   return (
     <div className="animate-skeleton flex flex-col rounded-[22px] bg-white p-[21px]" aria-hidden>
-      <div className="h-[187px] rounded-[16px] bg-skeleton" />
-      <div className="mt-[24px] h-[23px] rounded-[4px] bg-skeleton" />
-      <div className="mt-[10px] h-[26px] w-[75px] rounded-[4px] bg-skeleton" />
-      <div className="mt-[27px] h-[15px] rounded-[4px] bg-skeleton" />
-      <div className="mt-[7px] h-[15px] rounded-[4px] bg-skeleton" />
-      <div className="mt-[23px] h-[37px] rounded-[4px] bg-skeleton" />
+      <div className="aspect-square rounded-[16px] bg-skeleton" />
+      <div className="mt-[18px] h-[20px] rounded-[4px] bg-skeleton" />
+      <div className="mt-[10px] h-[30px] w-[110px] rounded-[4px] bg-skeleton" />
+      <div className="mt-[16px] h-[30px] w-[96px] rounded-full bg-skeleton" />
+      <div className="mt-[16px] h-[37px] rounded-full bg-skeleton" />
     </div>
   );
 }
 
 export function ProductCard({ product }: { product: Product }) {
   const cart = useCart();
-  const qty = cart.qtyOf(product.id);
-  const badge = badgeOf(product);
+  const [qty, setQty] = useState(1);
+  const { price, oldPrice } = priceOf(product);
+  const href = `/product/${product.id}`;
 
   return (
-    <article className="group flex flex-col rounded-[22px] bg-white p-[21px] transition-shadow duration-300 hover:shadow-soft">
-      <div className="relative h-[187px] overflow-hidden rounded-[16px] bg-skeleton">
+    <article className="group flex h-full flex-col rounded-[22px] bg-white p-[21px] transition-shadow duration-300 hover:shadow-soft">
+      <Link href={href} className="relative block aspect-square overflow-hidden rounded-[16px] bg-[#f5f5f5]" tabIndex={-1}>
         <Image
           src={product.image}
           alt={product.title}
           fill
-          sizes="(min-width: 1024px) 220px, (min-width: 480px) 45vw, 90vw"
+          sizes="(min-width: 1024px) 240px, (min-width: 480px) 45vw, 90vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        {badge && (
-          <span className="absolute top-2.5 left-2.5 rounded-full bg-accent px-2.5 py-1 text-[11px] leading-none text-white">
-            {badge}
-          </span>
-        )}
-        {product.tags?.includes("spicy") && (
-          <span
-            className="absolute top-2.5 right-2.5 grid size-6 place-items-center rounded-full bg-white/90 text-accent"
-            title="Острое"
-          >
-            <Flame className="size-3.5" strokeWidth={2.2} />
-          </span>
-        )}
-      </div>
-      <h3 className="mt-[22px] line-clamp-1 text-[17px] leading-[27px] font-medium">{product.title}</h3>
-      <span className="mt-[8px] inline-flex h-[26px] w-fit items-center rounded-full bg-cream px-3 text-[12px] text-ink/80">
-        {product.portion}
-      </span>
-      <p className="mt-[20px] line-clamp-2 min-h-[44px] text-[12.5px] leading-[22px] text-muted">
-        {product.description}
-      </p>
-      <div className="mt-auto pt-[23px]">
-        {qty === 0 ? (
-          <button
-            type="button"
-            onClick={() => cart.add(product)}
-            className="flex h-[37px] w-full items-center justify-between rounded-full bg-cream pr-1 pl-4 text-[14px] transition-colors hover:bg-accent hover:text-white"
-          >
-            <span className="flex items-baseline gap-1.5">
-              <span className="font-medium">{formatPrice(product.price)}</span>
-              {product.oldPrice && (
-                <s className="text-[11px] text-muted group-hover:text-current">{formatPrice(product.oldPrice)}</s>
-              )}
-            </span>
-            <span className="flex h-[29px] items-center gap-1 rounded-full bg-accent px-3 text-[13px] text-white">
-              <Plus className="size-3.5" strokeWidth={2.4} />В корзину
-            </span>
-          </button>
-        ) : (
-          <div className="flex h-[37px] items-center justify-between rounded-full bg-accent p-1 text-white">
-            <button
-              type="button"
-              onClick={() => cart.decrement(product.id)}
-              aria-label="Убрать одну порцию"
-              className="grid size-[29px] place-items-center rounded-full bg-white/20 transition hover:bg-white/30"
-            >
-              <Minus className="size-4" />
-            </button>
-            <span className="text-[14px] font-medium">
-              {qty} × {formatPrice(product.price)}
-            </span>
-            <button
-              type="button"
-              onClick={() => cart.add(product)}
-              aria-label="Добавить ещё порцию"
-              className="grid size-[29px] place-items-center rounded-full bg-white/20 transition hover:bg-white/30"
-            >
-              <Plus className="size-4" />
-            </button>
-          </div>
-        )}
+        <ProductLabels product={product} className="absolute bottom-[11px] left-[12px] right-3" />
+      </Link>
+      <h3 className="mt-[14px] min-h-[2.6em] font-display text-[16px] leading-[1.3] lg:text-[15.5px]">
+        <Link href={href} className="line-clamp-2 transition-colors hover:text-accent">
+          {product.title}
+        </Link>
+      </h3>
+      <p className="mt-[2px] text-[12px] text-muted">{product.options[0].label}</p>
+      <div className="mt-auto pt-[6px]">
+        <div className="flex items-baseline gap-2">
+          <span className="font-display text-[24px] leading-[1.3] lg:text-[25px]">{formatPrice(price)}</span>
+          {oldPrice && <s className="text-[13px] text-muted">{formatPrice(oldPrice)}</s>}
+        </div>
+        <QtyStepper value={qty} onChange={setQty} className="mt-[10px]" />
+        <button
+          type="button"
+          onClick={() => {
+            cart.add(product, qty);
+            setQty(1);
+          }}
+          className="mt-[14px] h-[37px] w-full rounded-full bg-accent text-[14px] text-white shadow-accent transition-colors hover:bg-accent-hover active:scale-[0.99]"
+        >
+          В корзину
+        </button>
       </div>
     </article>
   );

@@ -56,6 +56,11 @@
   }
 }
 
+@utility container-narrow {
+  width: min(100% - 32px, 840px);
+  margin-inline: auto;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 24px;

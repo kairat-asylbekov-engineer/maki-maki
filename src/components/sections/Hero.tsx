@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
-import { heroCategories, site } from "@/data/site";
+import { heroCategories } from "@/data/site";
 import { ButtonLink } from "@/components/ui/Button";
 
 const cardTheme = {
@@ -32,22 +32,8 @@ export function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#fdebdf]/95 via-[#fdebdf]/80 to-[#fdebdf]/20 md:bg-gradient-to-r md:from-[#fdebdf]/90 md:via-[#fdebdf]/40 md:to-transparent lg:hidden" />
 
       <div className="container-hero relative">
-        {/* Шапка */}
-        <header className="flex items-center gap-3 pt-4 lg:pl-[15px]">
-          <Link href="/" className="flex items-center gap-3" aria-label={`${site.name} — на главную`}>
-            <Image
-              src="/images/logo.webp"
-              alt={`Логотип ${site.name}`}
-              width={40}
-              height={40}
-              className="size-10 rounded-full ring-1 ring-black/5"
-            />
-            <span className="flex flex-col">
-              <span className="font-display text-[15.5px] leading-[1.25]">{site.name}</span>
-              <span className="text-[11.5px] leading-[1.3] text-ink/80">{site.tagline}</span>
-            </span>
-          </Link>
-        </header>
+        {/* Место под общую шапку (SiteHeader лежит поверх) */}
+        <div className="h-[76px] lg:h-[56px]" aria-hidden />
 
         {/* Заголовок */}
         <div className="pt-12 lg:pt-[61px]">
@@ -79,7 +65,7 @@ export function Hero() {
           {heroCategories.map((cat) => (
             <Link
               key={cat.title}
-              href={`/catalog?category=${cat.slug}`}
+              href={`/catalog/${cat.slug}`}
               className={`group relative isolate h-[145px] overflow-hidden rounded-[20px] ${cardTheme[cat.theme]}`}
             >
               <Image
