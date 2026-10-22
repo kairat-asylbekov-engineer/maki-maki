@@ -7,8 +7,8 @@ export type { Product } from "./menu";
 export const site = {
   name: "Maki Maki",
   tagline: "Доставка суши и роллов",
-  city: "Москве",
-  currency: "₽",
+  city: "Алматы",
+  currency: "₸",
   phone: "+7 (000) 000-00-00",
   phoneHref: "tel:+70000000000",
   telegramChannel: "Maki Maki",
@@ -16,15 +16,15 @@ export const site = {
   whatsappHref: "https://wa.me/70000000000",
   vkHref: "https://vk.com/",
   okHref: "https://ok.ru/",
-  email: "hello@maki-maki.ru",
-  address: "г. Москва, ул. Примерная, д. 1",
+  email: "hello@maki-maki.kz",
+  address: "г. Алматы, пр. Абая, 1",
   hours: [
     ["Пн—Чт", "с 11:00 до 23:00"],
     ["Пт—Вс", "с 11:00 до 00:00"],
   ] as [string, string][],
-  legal: "ИП Иванов И. И. · ИНН 000000000000 · ОГРНИП 000000000000000",
+  legal: "ТОО «Maki Maki» · БИН 000000000000",
   /** Координаты для карты [долгота, широта] */
-  mapCenter: [37.6176, 55.7558] as [number, number],
+  mapCenter: [76.9286, 43.2383] as [number, number],
   year: 2026,
 };
 
@@ -92,7 +92,7 @@ export const rollOfTheDay: Product = {
   ...dragon,
   id: "roll-of-day",
   title: "Ролл дня · Дракон",
-  options: [{ ...dragon.options[0], price: 450, oldPrice: dragon.options[0].price }],
+  options: [{ ...dragon.options[0], price: 2690, oldPrice: dragon.options[0].price }],
   tags: ["promo"],
 };
 
@@ -157,4 +157,4 @@ export const reviews = [
 ];
 
 export const formatPrice = (value: number) =>
-  `${value >= 10000 ? value.toLocaleString("ru-RU").replace(/\s/g, " ") : value} ${site.currency}`;
+  `${value.toLocaleString("ru-RU").replace(/\s/g, "\u00a0")}\u00a0${site.currency}`;

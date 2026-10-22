@@ -35,7 +35,7 @@ export default function Home() {
               клиентов!
             </>
           }
-          text={`При первом заказе от ${formatPrice(1500)} - Филадельфия в подарок!`}
+          text={`При первом заказе от ${formatPrice(10000)} — Филадельфия в подарок!`}
           action={
             <ButtonLink href="/catalog">
               Заказать сейчас

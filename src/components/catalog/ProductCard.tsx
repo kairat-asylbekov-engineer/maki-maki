@@ -68,7 +68,7 @@ export function ProductCard({ product }: { product: Product }) {
       </h3>
       <p className="mt-[2px] text-[12px] text-muted">{product.options[0].label}</p>
       <div className="mt-auto pt-[6px]">
-        <div className="flex items-baseline gap-2">
+        <div className="flex flex-wrap items-baseline gap-x-2">
           <span className="font-display text-[24px] leading-[1.3] lg:text-[25px]">{formatPrice(price)}</span>
           {oldPrice && <s className="text-[13px] text-muted">{formatPrice(oldPrice)}</s>}
         </div>

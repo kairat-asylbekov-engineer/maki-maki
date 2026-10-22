@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import type { Product, ProductTag } from "@/data/menu";
+import { site } from "@/data/site";
 import { ProductCard } from "./ProductCard";
 
 export type Chip = { href: string; label: string; active?: boolean };
@@ -150,7 +151,7 @@ function FilterDialog({
   }, [open, onClose]);
 
   const set = (patch: Partial<Filters>) => setFilters({ ...filters, ...patch });
-  const num = (v: string) => v.replace(/\D/g, "").slice(0, 5);
+  const num = (v: string) => v.replace(/\D/g, "").slice(0, 6);
 
   return (
     <>
@@ -177,7 +178,7 @@ function FilterDialog({
         </div>
 
         <fieldset className="mt-4 border-b border-[#ecdfd9] pb-5">
-          <legend className="mb-3 text-[15px]">Цена, {"₽"}</legend>
+          <legend className="mb-3 text-[15px]">Цена, {site.currency}</legend>
           <div className="grid grid-cols-2 gap-2.5">
             <RangeInput placeholder="От" value={filters.priceFrom} onChange={(v) => set({ priceFrom: num(v) })} />
             <RangeInput placeholder="До" value={filters.priceTo} onChange={(v) => set({ priceTo: num(v) })} />

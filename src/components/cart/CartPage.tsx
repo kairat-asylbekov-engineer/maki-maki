@@ -10,8 +10,8 @@ import { delivery, promoCodes } from "@/data/pages";
 import { useCart } from "./CartProvider";
 import { QtyStepper } from "@/components/ui/QtyStepper";
 
-const FREE_DELIVERY_FROM = 1500;
-const COURIER_PRICE = 199;
+const FREE_DELIVERY_FROM = 10000;
+const COURIER_PRICE = 990;
 const PICKUP_DISCOUNT = 10;
 
 export function CartPage() {
@@ -152,17 +152,17 @@ export function CartPage() {
           <h2 className="font-display text-[19px]">Форма заказа</h2>
           <div className="mt-4 grid gap-4 text-[14px] md:grid-cols-2">
             <Input label="Имя" name="name" required autoComplete="name" />
-            <Input label="Телефон" name="phone" type="tel" required autoComplete="tel" placeholder="+7 (___) ___-__-__" />
+            <Input label="Телефон" name="phone" type="tel" required autoComplete="tel" placeholder="+7 (7__) ___-__-__" />
             {method === "courier" && (
-              <Input label="Адрес доставки" name="address" required autoComplete="street-address" className="md:col-span-2" placeholder="Улица, дом, квартира, подъезд, этаж" />
+              <Input label="Адрес доставки" name="address" required autoComplete="street-address" className="md:col-span-2" placeholder="Улица / микрорайон, дом, квартира, подъезд, этаж" />
             )}
             <Input label="E-mail" name="email" type="email" autoComplete="email" />
             <label className="block">
               <span>Оплата</span>
               <select name="pay" className="mt-1.5 block h-[46px] w-full rounded-full border border-[#ecdfd9] bg-white px-4 outline-none focus:border-accent">
+                <option>Kaspi QR</option>
                 <option>Картой курьеру</option>
                 <option>Наличными</option>
-                <option>Онлайн на сайте</option>
               </select>
             </label>
             <label className="block md:col-span-2">
